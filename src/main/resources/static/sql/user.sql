@@ -15,7 +15,7 @@ CREATE TABLE `user` (
   `password` varchar(45) DEFAULT NULL,
   `role` int(2) NOT NULL,
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `user`

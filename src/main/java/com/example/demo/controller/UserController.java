@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,67 +16,114 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
+/**
+ * 定義UserController類別
+ * 對應/users
+ * @author SamChen
+ * @version 1
+ * @CreateDate 2021-05-31
+ */
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
-	private UserService userService;
+	private static final Logger logger = LogManager.getLogger(UserController.class);
 
 	@Autowired
-	public UserController(UserService theUserService) {
-		userService = theUserService;
-	}
+	private UserService userService;
 
-	// add mapping for "/list"
+//  另一種寫法
+//	@Autowired
+//	public UserController(UserService theUserService) {
+//		userService = theUserService;
+//	}
+	
+	/**對應/list
+	 * 列出所有user
+	 * @author SamChen
+	 * @version 1
+	 * @CreateDate 2021-05-31
+	 */
 	@GetMapping("/list")
 	public String listUsers(Model theModel) {
-		// get employees from DB
-		List<User> theUsers = userService.findAll();
-		// add to the spring model
+		
+		logger.info("Get users from DB");
+		List<User> theUsers = userService.findAllUser();
+		
+		logger.info("Add to the spring model");
 		theModel.addAttribute("users", theUsers);
+		
+		logger.info("show list-users page");
 		return "users/list-users";
 	}
-
+	
+	/**對應/showFormForAdd
+	 * 新增user
+	 * @author SamChen
+	 * @version 1
+	 * @CreateDate 2021-05-31
+	 */
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
-
-		// create model attribute to bind form data
+		
+		logger.info("create model attribute to bind form data");
 		User theUser = new User();
-
+		
+		logger.info("Add user attribute");
 		theModel.addAttribute("user", theUser);
-
+		
+		logger.info("to user-form page");
 		return "users/user-form";
 	}
-
+	
+	/**對應/showFormForUpdate
+	 * 修改user
+	 * @author SamChen
+	 * @version 1
+	 * @CreateDate 2021-05-31
+	 */
 	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("userId") int theId, Model theModel) {
-		// get the employee from the service
-		User theUser = userService.findById(theId);
-
-		// set employee as a model attribute to pre-populate the form
+	public String showFormForUpdate(@RequestParam("userId") int userId, Model theModel) {
+		
+		logger.info("get the user from the service");
+		User theUser = userService.findById(userId);
+		
+		logger.info("set user as a model attribute to pre-populate the form");
 		theModel.addAttribute("user", theUser);
 
-		// send over to our form
+		logger.info("to user-form page");
 		return "users/user-form";
 	}
-
+	
+	/**對應/save
+	 * 儲存user
+	 * @author SamChen
+	 * @version 1
+	 * @CreateDate 2021-05-31
+	 */
 	@PostMapping("/save")
 	public String saveEmployee(@ModelAttribute("user") User theUser) {
 
-		// save the employee
-		userService.save(theUser);
-
-		// use a redirect to prevent duplicate submissions
+		logger.info("Save the user");
+		userService.saveUser(theUser);
+		
+		logger.info("redirect:/users/list");
 		return "redirect:/users/list";
 	}
-
+	
+	/**對應/delete
+	 * 刪除user
+	 * @author SamChen
+	 * @version 1
+	 * @CreateDate 2021-05-31
+	 */
 	@GetMapping("/delete")
-	public String deleteEmployee(@RequestParam("userId") int theId) {
+	public String deleteEmployee(@RequestParam("userId") int userId) {
 
-		// save the employee
-		userService.deleteById(theId);
-
-		// use a redirect to prevent duplicate submissions
+		logger.info("Save the user");
+		userService.deleteById(userId);
+		
+		logger.info("redirect:/users/list");
 		return "redirect:/users/list";
 	}
 }

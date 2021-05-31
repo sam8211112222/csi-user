@@ -7,28 +7,52 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+/**
+ * 對應資料庫的user表格
+ * @author SamChen
+ * @version 1
+ * @CreateDate 2021-05-31
+ */
 @Entity
 @Table(name="user")
 public class User {
 	
+	/**
+	 * 帳號
+	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
+	/**
+	 * 單位代碼
+	 */
 	@Column(name="org_code")
 	private int orgCode;
 	
+	/**
+	 * 姓名
+	 */
 	@Column(name="formal_name")
 	private String formalName;
 	
+	/**
+	 * 別名
+	 */
 	@Column(name="nick_name")
 	private String nickName;
 	
+	/**
+	 * 密碼
+	 */
 	@Column(name="password")
 	private String password;
 	
-
+	/**
+	 * 角色
+	 */
 	@Column(name="role")
 	private int role;
 
