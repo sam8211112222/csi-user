@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理使用者帳號</title>
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-1.11.3.min.js"></script>
+
+<!--[if IE]>
+<script src="js/html5shiv.js"></script>
+<![endif]-->
+
+
+<!--breadcrumnb-->
+<script src="js/jBreadCrumb/js/jquery.jBreadCrumb.1.1.js"></script>
+<script src="js/jBreadCrumb/js/jquery.easing.1.3.js"></script>
+<link rel="stylesheet" href="js/jBreadCrumb/styles/BreadCrumb.css" type="text/css">
+
+<script>
+jQuery(document).ready(function()
+{
+	jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
+
+
+<!--button link-->
+<script>
+$(document).ready(function(){
+    
+	$('button').click(function(){
+        var add= $(this).find('i').hasClass('icon-add');
+        var edit= $(this).find('i').hasClass('icon-edit');
+        var user= $(this).find('i').hasClass('icon-user');
+        var org= $(this).find('i').hasClass('icon-org');
+        var msg= $(this).find('i').hasClass('icon-msg');
+        if(edit==true){
+        location.href='ap_system_edit.html';
+        }
+        if(add==true){
+        location.href='ap_system_add.html';
+        }
+   }); 
+})
+</script>
+
+
+<!--field Expand/Collapse control-->
+<script>
+$(document).ready(function(){
+$(".fieldControl").click(function () {
+
+    $header = $(this);
+    $icon = $(this).find('i');
+    $content = $header.next();
+
+    $content.slideToggle(500, function () {
+        
+        $icon.toggleClass(function () {
+            if ($icon.hasClass('icon-collapse')){
+                  return 'icon-expand';
+                }
+        }); 
+        
+    });
+
+});
+})
+</script>
+
+<script>
+$(document).ready(function(){
+     
+   $('.iframeToggle').click(function(){
+                     
+            $('main').toggleClass('wide');
+            $('.frame_menu').toggleClass('iframeCollapse');
+            $(this).toggleClass('collapse');
+            
+            var icon = $(this).find('i');
+           
+           icon.toggleClass(function () {
+            if (icon.hasClass('icon-pager-prev')){
+                  $(this).removeClass();                  
+                  return 'icon-pager-next';
+                }
+             if (icon.hasClass('icon-pager-next')){
+                  $(this).removeClass();                  
+                  return 'icon-pager-prev';
+                } 
+        }); 
+             
+    });  
+})
+</script>
+ 
+
+</head>
+
+<body>
+<!--frame--> 
+<div class="frame_header"><iframe src="frame_header.html" scrolling="no"></iframe></div>
+<div class="frame_menu"><button class="iframeToggle"><i class="icon-pager-prev"></i></button><iframe src="frame_menu.html" scrolling="yes"></iframe></div>
+
+
+<main>
+	<!--breadcrumb start-->
+    <div class="breadCrumbHolder module">
+      <div id="breadCrumb" class="breadCrumb module">
+        <ul>
+          <li><a href="main.html">Home</a></li>
+          <li><a href="#">管理使用者帳號</a></li>
+        </ul>
+      </div>
+       </div>
+      <!--breadcrumb end-->
+
+	<h1>管理使用者帳號</h1>
+    
+    <fieldset class="search">
+        <legend>查詢條件</legend>
+        
+        <button class="small fieldControl"><i class="icon-collapse"></i></button>
+        
+        <table class="grid_query">
+      	<tr>
+        	<th><font color="red">&nbsp;&nbsp;&nbsp;&nbsp;</font>帳號</th>
+        	<td><input type="text" value="" style="width:10rem"/></td>
+        	<th><font color="red">&nbsp;&nbsp;&nbsp;&nbsp;</font>姓名</th>
+        	<td class="button"><input type="text" value="" style="width:15rem"/>&nbsp;&nbsp;
+                <button><i class="icon-search"></i> 查詢</button>
+                <button><i class="icon-add"></i> 新增</button>
+            </td>
+      	</tr>
+        </table>
+    </fieldset>
+    
+    <fieldset>
+        <legend>查詢結果</legend>      
+        <div class="grid_BtnBar">
+        	<button><i class="icon-delete"></i> 刪除</button>
+        </div>
+        
+        <table class="grid_list">
+        <tr>
+        	<th width="3%"><input type="checkbox" name="button"></th>
+            <th width="10%">單位代碼</th>
+        	<th width="10%">帳號</th>
+            <th width="25%">別名</th>
+        	<th width="25%">姓名</th>
+        	<th width="15%">角色</th>
+        	<th width="10%">&nbsp;</th>
+        </tr>
+        <tr>
+        	<td align="center"><input type="checkbox"/></td>
+            <td align="center">1</td>
+        	<td align="left">CHT0001</td>
+            <td align="left">twadmin</td>
+        	<td align="left">李玉</td>
+        	<td align="left">一般使用者</td>
+       		<td class="funBtn"><button><i class="icon-edit"></i> 編輯</button></td>
+        </tr>
+        <tr>
+        	<td align="middle"><input type="checkbox"/></td>
+            <td align="center">2</td>
+        	<td align="left">CHT0011</td>
+            <td align="left">cht test account</td>
+        	<td align="left">王小名</td>
+        	<td align="left">一般使用者</td>
+       		<td class="funBtn"><button><i class="icon-edit"></i> 編輯</button></td>
+        </tr>
+        <tr>
+            <td align="middle"><input type="checkbox"/></td>
+            <td align="center">3</td>
+            <td align="left">CHT0201</td>
+            <td align="left">HTM Administrator</td>
+            <td align="left">林大同</td>
+            <td align="left">管理者</td>
+            <td class="funBtn"><button><i class="icon-edit"></i> 編輯</button></td>
+        </tr>
+        </table>
+        
+        <section class="pager">
+        <button><i class="icon-pager-first"></i></button>
+        <button><i class="icon-pager-prev"></i></button>
+        <span>目前 <input type="text" value="1"> 頁,共10頁&nbsp;總共100筆</span>
+        <button><i class="icon-pager-next"></i></button>
+        <button><i class="icon-pager-last"></i></button>
+        </section>
+    </fieldset>
+</main>
+
+</body>
+</html>
