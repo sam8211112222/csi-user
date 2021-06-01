@@ -102,7 +102,7 @@ public class UserController {
 	 * @CreateDate 2021-05-31
 	 */
 	@PostMapping("/save")
-	public String saveEmployee(@ModelAttribute("user") User theUser) {
+	public String saveUser(@ModelAttribute("user") User theUser) {
 
 		logger.info("Save the user");
 		userService.saveUser(theUser);
@@ -118,7 +118,7 @@ public class UserController {
 	 * @CreateDate 2021-05-31
 	 */
 	@GetMapping("/delete")
-	public String deleteEmployee(@RequestParam("userId") int userId) {
+	public String deleteUser(@RequestParam("userId") int userId) {
 
 		logger.info("Save the user");
 		userService.deleteById(userId);
