@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>使用者帳號資料</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>使用者帳號資料</h3>
+    <hr>
+
+    <form action="#" th:action="@{/users/save}"
+          th:object="${user}" method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}"/>
+
+        <select th:field="*{orgCode}" class="form-control mb-4 col-4">
+            <option value="0" disabled="disabled">請選擇科別</option>
+            <option th:value="1" th:text="第一科"></option>
+            <option th:value="'2'" th:text="第二科"></option>
+            <option th:value="3" th:text="第三科"></option>
+        </select>
+        <input type="text" th:field="*{formalName}"
+               class="form-control mb-4 col-4" placeholder="請輸入姓名">
+
+        <input type="text" readonly th:field="*{account}"
+               class="form-control mb-4 col-4" placeholder="請輸入帳號">
+
+        <input type="password" name="password" readonly th:value="${user.password}"
+               class="form-control mb-4 col-4" placeholder="請輸入密碼">
+
+        <select th:field="*{role}" class="form-control mb-4 col-4">
+            <option th:value="0" th:text="一般使用者"></option>
+            <option th:value="1" th:text="管理者"></option>
+        </select>
+
+        <button type="submit" class="btn btn-info col-2">確認</button>
+
+    </form>
+
+    <hr>
+    <a th:href="@{/users/list}">回使用者帳號頁面</a>
+
+</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

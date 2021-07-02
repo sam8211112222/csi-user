@@ -10,6 +10,6 @@ import com.example.demo.entity.User;
  * @version 1
  * @CreateDate 2021-05-31
  */
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, String> {
 
 }

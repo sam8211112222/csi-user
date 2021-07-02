@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 
 /**
@@ -24,65 +28,72 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private String id;
 	
 	/**
 	 * 單位代碼
 	 */
 	@Column(name="org_code")
-	private int orgCode;
+	private Integer orgCode;
 	
 	/**
 	 * 姓名
 	 */
 	@Column(name="formal_name")
+	@NotEmpty(message = "姓名不可為空")
+	@NotBlank
 	private String formalName;
 	
 	/**
 	 * 別名
 	 */
-	@Column(name="nick_name")
-	private String nickName;
+	@Column(name="account")
+	@NotEmpty(message = "別名不可為空")
+	@NotBlank
+	private String account;
 	
 	/**
 	 * 密碼
 	 */
 	@Column(name="password")
+	@NotEmpty(message = "密碼不可為空")
+	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z\\d\\S]{5,8}",
+			message = "請輸入任意英數字混合共5~8碼")
 	private String password;
 	
 	/**
 	 * 角色
 	 */
 	@Column(name="role")
-	private int role;
+	private Integer role;
 
-	public User(int id, int orgCode, String formalName, String nickName, String password, int role) {
-		super();
+	public User(String id, Integer orgCode, String formalName, String account, String password, Integer role) {
 		this.id = id;
 		this.orgCode = orgCode;
 		this.formalName = formalName;
-		this.nickName = nickName;
+		this.account = account;
 		this.password = password;
 		this.role = role;
 	}
-	
+
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public int getOrgCode() {
+	public Integer getOrgCode() {
 		return orgCode;
 	}
 
-	public void setOrgCode(int orgCode) {
+	public void setOrgCode(Integer orgCode) {
 		this.orgCode = orgCode;
 	}
 
@@ -94,12 +105,12 @@ public class User {
 		this.formalName = formalName;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public String getPassword() {
@@ -110,17 +121,23 @@ public class User {
 		this.password = password;
 	}
 
-	public int getRole() {
+	public Integer getRole() {
 		return role;
 	}
 
-	public void setRole(int role) {
+	public void setRole(Integer role) {
 		this.role = role;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", orgCode=" + orgCode + ", formalName=" + formalName + ", nickName=" + nickName
-				+ ", password=" + password + ", role=" + role + "]";
+		return "User{" +
+				"id='" + id + '\'' +
+				", orgCode=" + orgCode +
+				", formalName='" + formalName + '\'' +
+				", account='" + account + '\'' +
+				", password='" + password + '\'' +
+				", role=" + role +
+				'}';
 	}
 }

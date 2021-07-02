@@ -73,7 +73,7 @@ public class UserController {
 		theModel.addAttribute("user", theUser);
 		
 		logger.info("to user-form page");
-		return "users/user-form";
+		return "users/user-add-form";
 	}
 	
 	/**對應/showFormForUpdate
@@ -83,8 +83,7 @@ public class UserController {
 	 * @CreateDate 2021-05-31
 	 */
 	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("userId") int userId, Model theModel) {
-		
+	public String showFormForUpdate(@RequestParam("userId") String userId, Model theModel) {
 		logger.info("get the user from the service");
 		User theUser = userService.findById(userId);
 		
@@ -92,7 +91,7 @@ public class UserController {
 		theModel.addAttribute("user", theUser);
 
 		logger.info("to user-form page");
-		return "users/user-form";
+		return "users/user-update-form";
 	}
 	
 	/**對應/save
@@ -103,12 +102,15 @@ public class UserController {
 	 */
 	@PostMapping("/save")
 	public String saveUser(@ModelAttribute("user") User theUser) {
-
+		logger.info(theUser.getId());
 		logger.info("Save the user");
-		userService.saveUser(theUser);
-		
-		logger.info("redirect:/users/list");
-		return "redirect:/users/list";
+		if (userService.saveUser(theUser) ) {
+
+			logger.info("redirect:/users/list");
+			return "redirect:/users/list";
+		} else {
+			return "redirect:/users/showFormForUpdate?userId=" +theUser.getId() ;
+		}
 	}
 	
 	/**對應/delete
@@ -118,7 +120,7 @@ public class UserController {
 	 * @CreateDate 2021-05-31
 	 */
 	@GetMapping("/delete")
-	public String deleteUser(@RequestParam("userId") int userId) {
+	public String deleteUser(@RequestParam("userId") String userId) {
 
 		logger.info("Delete the user");
 		userService.deleteById(userId);

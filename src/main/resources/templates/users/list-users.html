@@ -30,24 +30,22 @@
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th>帳號</th>
+					<th>使用者編號</th>
 					<th>單位代碼</th>
 					<th>姓名</th>
-					<th>別名</th>
 					<th>角色</th>
 					<th>其他功能</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="tempUser : ${users}">
-					<td th:text="${tempUser.id}" />
+					<td th:text="${tempUser.id}"></td>
 					<td th:switch="${tempUser.orgCode}">
 						<span th:case="1">一科</span>
 						<span th:case="2">二科</span>
 						<span th:case="3">三科</span>
 					</td>
-					<td th:text="${tempUser.formalName}" />
-					<td th:text="${tempUser.nickName}" />
+					<td th:text="${tempUser.formalName}"></td>
 					<td th:switch="${tempUser.role}">
 						<span th:case="0">一般使用者</span>
 						<span th:case="1">管理者</span>
@@ -58,8 +56,8 @@
 						th:href="@{/users/showFormForUpdate(userId=${tempUser.id})}"
 						class="btn btn-info btn-sm"> 修改 </a> <a
 						th:href="@{/users/delete(userId=${tempUser.id})}"
-						class="btn btn-danger btn-sm" onclick="if(!(confirm('確認刪除此帳號?')))">
-							刪除 </a></td>
+						class="btn btn-danger btn-sm" onclick="if (!(confirm('確認是否刪除此使用者?'))) return false">
+						刪除</a></td>
 				</tr>
 			</tbody>
 		</table>

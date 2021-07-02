@@ -34,8 +34,7 @@ public class UserServiceImpl implements UserService {
 
 	/**
 	 * 取得全部user
-	 * 
-	 * @param 對應Table(name="user")
+	 *
 	 * @return 全部user資料
 	 * @author SamChen
 	 * @version 1
@@ -58,7 +57,7 @@ public class UserServiceImpl implements UserService {
 	 * @CreateDate 2021-05-31
 	 */
 	@Override
-	public User findById(int userId) {
+	public User findById(String userId) {
 		
 		logger.info("execute findById()");
 		Optional<User> result = userRepository.findById(userId);
@@ -83,10 +82,14 @@ public class UserServiceImpl implements UserService {
 	 * @CreateDate 2021-05-31
 	 */
 	@Override
-	public void saveUser(User theUser) {
-		
+	public boolean saveUser(User theUser) {
 		logger.info("execute findById()");
-		userRepository.save(theUser);
+		if(theUser.getFormalName() != null && !theUser.getFormalName().equals("")) {
+			userRepository.save(theUser);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -99,7 +102,7 @@ public class UserServiceImpl implements UserService {
 	 * @CreateDate 2021-05-31
 	 */
 	@Override
-	public void deleteById(int userId) {
+	public void deleteById(String userId) {
 		
 		logger.info("execute deleteById()");
 		userRepository.deleteById(userId);

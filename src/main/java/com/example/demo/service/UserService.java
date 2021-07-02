@@ -14,9 +14,9 @@ public interface UserService {
 
 	public List<User> findAllUser();
 
-	public User findById(int userId);
+	public User findById(String userId);
 
-	public void saveUser(User theUser);
+	public boolean saveUser(User theUser);
 
-	public void deleteById(int userId);
+	public void deleteById(String userId);
 }
