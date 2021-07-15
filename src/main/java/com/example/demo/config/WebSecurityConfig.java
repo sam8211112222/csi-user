@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 /**
  * 定義WebSecurityConfig類別
+ *
  * @author SamChen
  * @version 1
  * @CreateDate 2021-07-13
@@ -33,16 +34,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                // 全部腳色可以瀏覽
                 .antMatchers("users/list").permitAll()
-                .antMatchers("/users/non-list*").hasAnyRole("MANAGER", "ADMIN")
+                // 只有ADMIN可以瀏覽
+                .antMatchers("/users/non-list*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-             .formLogin()
+                .formLogin()
+                // 對應LoginController的/loginPage
                 .loginPage("/loginPage")
+                // 對應自訂的登入action
                 .loginProcessingUrl("/login")
                 .permitAll()
                 .and()
-             .logout()
+                .logout()
                 .permitAll();
     }
 
@@ -54,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @CreateDate 2021-07-13
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled from user where username=?")
                 .authoritiesByUsernameQuery("select username, authority "

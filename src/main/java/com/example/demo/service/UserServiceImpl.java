@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         logger.info("execute findById()");
         BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
-        if(!user.getPassword().equals("")) {
+        if (!user.getPassword().equals("")) {
             user.setPassword(bcryptPasswordEncoder.encode(user.getPassword()));
             logger.info(user);
             userRepository.save(user);

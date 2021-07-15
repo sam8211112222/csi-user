@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * 定義LoginController類別
- * 對應/loginPage
+ *
  * @author SamChen
  * @version 1
  * @CreateDate 2021-07-13
@@ -13,8 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
+    /**
+     * 對應/loginPage
+     * 導至登入頁面
+     *
+     * @author SamChen
+     * @version 1
+     * @CreateDate 2021-07-13
+     */
     @GetMapping("/loginPage")
-    public String showLoginPage(){
+    public String showLoginPage() {
         return "login/loginPage";
     }
 }

@@ -13,18 +13,18 @@ import java.util.List;
  */
 public interface UserService {
 
-	public List<User> findAllUser();
+    public List<User> findAllUser();
 
-	public List<User> findAllByEnabled();
+    public List<User> findAllByEnabled();
 
-	public List<User> findAllByUnabled();
+    public List<User> findAllByUnabled();
 
-	public User findById(Integer userId);
+    public User findById(Integer userId);
 
-	public void saveUser(User theUser);
+    public void saveUser(User theUser);
 
-	public void deleteById(Integer userId);
+    public void deleteById(Integer userId);
 
-	public void setEnabledtoTrue(Integer userId);
+    public void setEnabledtoTrue(Integer userId);
 }
 
