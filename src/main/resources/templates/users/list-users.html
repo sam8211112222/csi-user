@@ -1,69 +1,121 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
 
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-	crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
 
-<title>管理使用者帳號</title>
+    <title>管理使用者帳號</title>
 </head>
 
 <body>
 
-	<div class="container">
+<div class="container">
 
-		<h3>管理使用者帳號</h3>
-		<hr>
+    <h3>管理使用者帳號</h3>
+    <hr>
+    <div>
+        登入帳號為: <span sec:authentication="name" class="badge badge-primary"></span>
+        <hr>
+    </div>
+    <div>登入權限為:
+        <div sec:authorize="hasRole('EMPLOYEE')" class="badge badge-primary">一般使用者</div>
+        <div sec:authorize="hasRole('MANAGER')" class="badge badge-primary">管理者</div>
+        <div sec:authorize="hasRole('ADMIN')" class="badge badge-primary">系統管理者</div>
+        <hr>
+    </div>
 
-		<!-- Add a button -->
-		<a th:href="@{/users/showFormForAdd}"
-			class="btn btn-primary btn-sm mb-3"> 新增使用者帳號 </a>
+    <div style="display: flex">
+    <!-- 新增使用者帳號,設定ROLE_ADMIN可視 -->
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div>
+            <a th:href="@{/users/showFormForAdd}" style="margin: 5px"
+               class="btn btn-info btn-sm mb-3"> 新增使用者帳號 </a>
+        </div>
+    </div>
 
-		<table class="table table-bordered table-striped">
-			<thead class="thead-dark">
-				<tr>
-					<th>使用者編號</th>
-					<th>單位代碼</th>
-					<th>姓名</th>
-					<th>角色</th>
-					<th>其他功能</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="tempUser : ${users}">
-					<td th:text="${tempUser.id}"></td>
-					<td th:switch="${tempUser.orgCode}">
-						<span th:case="1">一科</span>
-						<span th:case="2">二科</span>
-						<span th:case="3">三科</span>
-					</td>
-					<td th:text="${tempUser.formalName}"></td>
-					<td th:switch="${tempUser.role}">
-						<span th:case="0">一般使用者</span>
-						<span th:case="1">管理者</span>
-					</td>
+    <!-- 顯示未啟用的user,設定ROLE_ADMIN可視 -->
+    <div sec:authorize="hasRole( 'ROLE_ADMIN')">
+        <a th:if="${status == true}" th:href="@{/users/non-list}" id="switchUn" style="margin: 5px"
+           class="btn btn-warning btn-sm mb-3"> 檢視待啟用使用者 </a>
+    </div>
+    <!-- 顯示未啟用的user,設定ROLE_ADMIN可視 -->
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:if="${status == false}" th:href="@{/users/list}" id="switchEn" style="margin: 5px"
+           class="btn btn-warning btn-sm mb-3"> 回已啟用使用者 </a>
+    </div>
+    </div>
+    <!--    使用者列表-->
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>使用者編號</th>
+            <th>單位代碼</th>
+            <th>姓名</th>
+            <th>狀態</th>
+            <th>角色</th>
+            <th>其他功能</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempUser : ${users}">
+            <td th:text="${tempUser.id}"></td>
+            <td th:switch="${tempUser.orgCode}">
+                <span th:case="1">一科</span>
+                <span th:case="2">二科</span>
+                <span th:case="3">三科</span>
+            </td>
+            <td th:text="${tempUser.formalName}"></td>
+            <td th:switch="${tempUser.enabled}">
+                <span th:case="true">已啟用</span>
+                <span th:case="false">未啟用</span>
+            </td>
+            <td th:switch="${tempUser.authority}">
+                <span th:case="ROLE_EMPLOYEE">一般使用者</span>
+                <span th:case="ROLE_MANAGER">管理者</span>
+                <span th:case="ROLE_ADMIN">系統管理者</span>
+            </td>
 
-					<!-- Add update button/link -->
-					<td><a
-						th:href="@{/users/showFormForUpdate(userId=${tempUser.id})}"
-						class="btn btn-info btn-sm"> 修改 </a> <a
-						th:href="@{/users/delete(userId=${tempUser.id})}"
-						class="btn btn-danger btn-sm" onclick="if (!(confirm('確認是否刪除此使用者?'))) return false">
-						刪除</a></td>
-				</tr>
-			</tbody>
-		</table>
+            <!-- Add update button/link -->
+            <td>
+                <div style="display: flex;justify-content: space-around">
+                <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+                    <a th:href="@{/users/showFormForUpdate(userId=${tempUser.id})}"
+                       class="btn btn-info btn-sm"> 修改
+                    </a>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')" >
+                    <a th:href="@{/users/delete(userId=${tempUser.id})}"
+                       class="btn btn-danger btn-sm" onclick="if (!(confirm('確認是否刪除此使用者?'))) return false">刪除
+                    </a>
+                </div>
+                <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+                    <a th:if="${status == false}" th:href="@{/users/enable(userId=${tempUser.id})}"
+                       class="btn btn-success btn-sm"> 啟用
+                    </a>
+                </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- 登出按鈕 -->
+    <form action="#" th:action="@{/logout}"
+          method="POST">
 
-	</div>
+        <input type="submit" value="登出" class="btn btn-outline-primary mt-2"/>
 
+    </form>
+</div>
 </body>
 </html>
 

@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
+    <!-- 引入Css -->
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}"/>
     <title>使用者帳號資料</title>
 </head>
 
@@ -26,35 +29,44 @@
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}"/>
 
-        <label>
+        <div>科別:
             <select th:field="*{orgCode}" class="form-control mb-4 col-4">
                 <option value="0" disabled="disabled">請選擇科別</option>
                 <option th:value="1" th:text="第一科"></option>
                 <option th:value="'2'" th:text="第二科"></option>
                 <option th:value="3" th:text="第三科"></option>
             </select>
-        </label>
-        <label>
-            <input type="text" th:field="*{formalName}"
-                   class="form-control mb-4 col-4" placeholder="請輸入姓名">
-        </label>
+        </div>
 
-        <label>
-            <input type="text" th:field="*{account}"
-                   class="form-control mb-4 col-4" placeholder="請輸入帳號">
-        </label>
+        <div>
+            <label for="formalName">姓名:</label>
+            <input type="text" id="formalName" th:field="*{formalName}"
+                   class="form-control mb-4 col-4" placeholder="請輸入姓名"/>
+            <p th:if="${#fields.hasErrors('formalName')}" class="error" th:errors="*{formalName}"></p>
+        </div>
 
-        <label>
-            <input type="password" name="password" th:value="${user.password}"
-                   class="form-control mb-4 col-4" placeholder="請輸入密碼">
-        </label>
+        <div>
+            <label for="username" >帳號:</label>
+            <input type="text" id="username" th:field="*{username}"
+                   class="form-control mb-4 col-4" placeholder="請輸入帳號"/>
+            <p th:if="${#fields.hasErrors('username')}" class="error" th:errors="*{username}"></p>
+        </div>
 
-        <label>
-            <select th:field="*{role}" class="form-control mb-4 col-4">
-                <option th:value="0" th:text="一般使用者"></option>
-                <option th:value="1" th:text="管理者"></option>
+
+        <div>
+            <label for="password" >密碼:</label>
+            <input type="password" id="password"  th:field="*{password}"
+                   class="form-control mb-4 col-4" placeholder="請輸入密碼"/>
+            <p th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></p>
+        </div>
+
+        <div>使用者類型:
+            <select id="authority" th:field="*{authority}" class="form-control mb-4 col-4">
+                <option th:value="ROLE_EMPLOYEE" th:text="一般使用者"></option>
+                <option th:value="ROLE_MANAGER" th:text="管理者"></option>
+                <option th:value="ROLE_ADMIN" th:text="系統管理者"></option>
             </select>
-        </label>
+        </div>
 
         <button type="submit" class="btn btn-info col-2">確認</button>
 

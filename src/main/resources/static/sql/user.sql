@@ -8,21 +8,27 @@ USE `prototype_directory`;
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `org_code` int(4) NOT NULL,
-  `formal_name` varchar(45) DEFAULT NULL,
-  `nick_name` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `role` int(2) NOT NULL,
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+                        `id`  bigint(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
+                        `org_code` int(4) NOT NULL,
+                        `formal_name` varchar(45) DEFAULT NULL,
+                        `username` varchar(45) DEFAULT NULL,
+                        `password` varchar(100) DEFAULT NULL,
+                        `enabled` boolean DEFAULT false,
+                        `authority` varchar(45) DEFAULT NULL,
+                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT = 1000;
 
 --
 -- Data for table `user`
+-- 預設密碼是123456
 --
 
-INSERT INTO `user` VALUES 
-	(1,1,'李玉','twadmin','123456',0),
-	(2,2,'王小名','account','123456',1),
-	(3,3,'林大同','Administrator','1234',0)
+
+INSERT INTO `user` VALUES
+('1001',1,'李玉','abc123','$2a$10$V3ofie/tuk83liTfQ02DOuEfg8bW8UesYNUYnw4yID1dFeIPsyK32',1,'ROLE_EMPLOYEE'),
+('1002',2,'王小名','abc456','$2a$10$V3ofie/tuk83liTfQ02DOuEfg8bW8UesYNUYnw4yID1dFeIPsyK32',1,'ROLE_MANAGER'),
+('1003',3,'林大同','abc789','$2a$10$V3ofie/tuk83liTfQ02DOuEfg8bW8UesYNUYnw4yID1dFeIPsyK32',1,'ROLE_ADMIN'),
+('1004',1,'丁哥','test123','$2a$10$V3ofie/tuk83liTfQ02DOuEfg8bW8UesYNUYnw4yID1dFeIPsyK32',1,'ROLE_EMPLOYEE'),
+('1005',2,'姚左群','test456','$2a$10$V3ofie/tuk83liTfQ02DOuEfg8bW8UesYNUYnw4yID1dFeIPsyK32',0,'ROLE_EMPLOYEE'),
+('1006',3,'陳文政','test789','$2a$10$V3ofie/tuk83liTfQ02DOuEfg8bW8UesYNUYnw4yID1dFeIPsyK32',0,'ROLE_EMPLOYEE');
 
