@@ -42,12 +42,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    /**
+     * 取得全部已啟用的user
+     *
+     * @return 全部已啟用的user資料
+     * @author SamChen
+     * @version 1
+     * @CreateDate 2021-07-13
+     */
     @Override
     public List<User> findAllByEnabled() {
         logger.info("execute findAllByEnabled()");
         return userRepository.findAllByEnabled();
     }
 
+    /**
+     * 取得全部未啟用的user
+     *
+     * @return 全部未啟用的user資料
+     * @author SamChen
+     * @version 1
+     * @CreateDate 2021-07-13
+     */
     @Override
     public List<User> findAllByUnabled() {
         logger.info("execute findAllByUnabled()");
@@ -118,6 +134,15 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
+    /**
+     * 依userId啟用User
+     *
+     * @param userId
+     * @return 依userId啟用User
+     * @author SamChen
+     * @version 1
+     * @CreateDate 2021-07-13
+     */
     @Override
     public void setEnabledtoTrue(Integer userId) {
         logger.info("execute EnabledtoTrue()");
