@@ -110,9 +110,11 @@ public class UserServiceImpl implements UserService {
         BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
         if (!user.getPassword().equals("")) {
             user.setPassword(bcryptPasswordEncoder.encode(user.getPassword()));
+            user.setEnabled(false);
             logger.info(user);
             userRepository.save(user);
         } else {
+            user.setEnabled(false);
             logger.info(user);
             userRepository.save(user);
         }
