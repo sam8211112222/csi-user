@@ -1,11 +1,6 @@
 package com.example.demo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
@@ -38,15 +33,15 @@ public class User {
     /**
      * 姓名
      */
-    @Column(name = "formal_name")
+    @Column(name = "formalname", unique = true)
     @NotEmpty(message = "姓名不可為空")
     @NotBlank
     private String formalName;
 
     /**
-     * 別名
+     * 帳號
      */
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     @NotEmpty(message = "別名不可為空")
     @NotBlank
     private String username;
